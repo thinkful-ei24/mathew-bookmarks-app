@@ -8,8 +8,8 @@ const store = (function() {
   // }
 
   const addItem = function(item) {
-    this.bookmarks.push(item);
-  }
+    this.items.push(item);
+  };
 
   //bookmarks: [{cuid: afhahfadf, title: 'Title goes here',
   //             url: 'http://fakfjkajfkj', description: 'fdkajfkajf',
@@ -24,9 +24,15 @@ const store = (function() {
   //  },
 
   return {
-    bookmarks: [{cuid: afhahfadf, title: 'Title goes here',
-      url: 'http://fakfjkajfkj', description: 'fdkajfkajf',
-      rating: 2, expanded: false}],
+    items: [{id: 'oneId', title: 'Title 1 goes here',
+      url: 'http://url1goeshere', description: 'This is the first description',
+      rating: 2, expanded: false},
+      {id: 'twoID', title: 'Title 2 is here',
+      url: 'http://url2goeshere', description: 'this is the second description',
+      rating: 5, expanded: false},
+      {id: 'threeId', title: 'Title 3 goes here',
+      url: 'http://url3goeshere', description: 'This is the third description',
+      rating: 1, expanded: false}],
     error: null,
     addingBookmark: false,
     editingBookmark: false,
@@ -40,4 +46,4 @@ const store = (function() {
     //setMinRating
   }
 
-})
+}());

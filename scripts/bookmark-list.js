@@ -5,7 +5,9 @@
 const bookmarkList = (function() {
 
   function generateItemElement(item) {
-    let itemTitle = `<span class="shopping-item shopping-item__checked">${item.name}</span>`;
+
+    console.log(item)
+    let itemTitle = `${item.name}`;
     // if (!item.checked) {
     //   itemTitle = `
     //     <form class="js-edit-item">
@@ -14,26 +16,22 @@ const bookmarkList = (function() {
     //   `;
     // }
 
-    //code for number of stars in rating goes here
-  
+
+    const ratingString = generateRatingStars(item.rating);
+
     return `
-      <div class="js-bookmark-element" data-item-id="${item.id}">
-      ${itemTitle} 
-      <span class="stars">
-      STARRATINGSGOHERE &#9733;&#9733;&#9733;&#9733;&#9733;
-      </span></div>
-      
-      <li class="js-item-element" data-item-id="${item.id}">
-        ${itemTitle}
-        <div class="shopping-item-controls">
-          <button class="shopping-item-toggle js-item-toggle">
-            <span class="button-label">check</span>
-          </button>
-          <button class="shopping-item-delete js-item-delete">
-            <span class="button-label">delete</span>
-          </button>
-        </div>
-      </li>`;
+    <div class='bookmark js-bookmark-element data-item-id=${item.id}'>${item.title}
+    <span class='stars'>${ratingString}</span></div>
+    `;
+  }
+
+  function generateRatingStars(ratingLevel) {
+    let starString = '';
+
+    for (let i=0; i<ratingLevel; i++) {
+      starString += '&#9733;';
+    }
+    return starString;
   }
 
   function generateBookmarkItemsString(bookmarks) {
@@ -50,7 +48,8 @@ const bookmarkList = (function() {
     // }
 
     // Filter item list if store prop is true by item.checked === false
-    let items = store.bookmarks;
+    let items = store.items;
+
     // if (store.hideCheckedItems) {
     //   items = store.items.filter(item => !item.checked);
     // }
@@ -62,6 +61,10 @@ const bookmarkList = (function() {
     // insert that HTML into the DOM
     $('.js-items').html(shoppingListItemsString);
     
+  }
+
+  function bindEventListeners() {
+    console.log('Bind Event Listeners')
   }
 
   return {
