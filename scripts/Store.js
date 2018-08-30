@@ -33,15 +33,7 @@ const store = (function() {
   //  },
 
   return {
-    items: [{id: 'oneId', title: 'Title 1 goes here',
-      url: 'http://url1goeshere', description: 'This is the first description',
-      rating: 2, expanded: true},
-      {id: 'twoID', title: 'Title 2 is here',
-      url: 'http://url2goeshere', description: 'this is the second description',
-      rating: 5, expanded: false},
-      {id: 'threeId', title: 'Title 3 goes here',
-      url: 'http://url3goeshere', description: 'This is the third description',
-      rating: 1, expanded: false}],
+    items: [],
     error: null,
     addingBookmark: false,
     editingBookmark: false,

@@ -55,9 +55,9 @@ const bookmarkList = (function() {
     
     if (item.expanded === true) {
       htmlText = htmlTitle + `
-      <p class="bookmark-drop-down">${item.description}</p>
+      <p class="bookmark-drop-down">${item.desc}</p>
       <p>
-      <p class="go-to-site"><a href="${item.url}">Go to Site</a></button></p>
+      <p class="go-to-site"><a href="${item.url}" target="_blank">Go to Site</a></button></p>
       <button class="edit">Edit</button>
       <button class="delete">Delete</button>
                 
