@@ -138,7 +138,7 @@ select {
   border-top: 2px solid black;
 }
 
-.edit, .js-item-delete {
+.js-item-edit, .js-item-delete {
   font-size: 0.7rem;
   position: relative;
   left: 5px;

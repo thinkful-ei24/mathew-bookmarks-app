@@ -33,7 +33,7 @@ const api = (function() {
     createItem,
     getItems,
     deleteItem
-  }
+  };
 
 
 }());

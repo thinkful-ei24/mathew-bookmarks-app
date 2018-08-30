@@ -55,6 +55,48 @@ const bookmarkList = (function() {
     };
   }
 
+  function generateEditBookmarkHtml() {
+    if (store.editingBookmark === true) {
+      const htmlText = `<div class="bookmark addbookmark">
+              <form class="1form-bookmark">Edit Bookmark
+              <fieldset class='titleLink'>
+              <label for="title">Title</label>
+              <input type="text" name='title' id='bookmark-title' />
+              
+              <label for="link">Link</label>
+              <input type="text" name='url' id='bookmark-link' />
+            </fieldset>
+            <fieldset class="form-description">
+              <label for="description">Description</label>
+              <input type="textarea" name='desc' id='bookmark-description' />
+            </fieldset>
+              <fieldset class='ratingarea'>
+                  <legend>Your Rating</legend>
+          
+                  <input type="radio" id="bookmark-5stars" name="rating" value="5" checked />
+                      <label for="bookmark-5stars">5 Stars</label>
+                  
+                      <input type="radio" id="bookmark-4stars" name="rating" value="4" />
+                      <label for="bookmark-4stars">4 Stars</label>
+                  
+                      <input type="radio" id="bookmark-3stars" name="rating" value="3" />
+                      <label for="bookmark-3stars">3 Stars</label>
+                  
+                      <input type="radio" id="bookmark-2stars" name="rating" value="2" />
+                      <label for="bookmark-2stars">2 Stars</label>
+                  
+                      <input type="radio" id="bookmark-1stars" name="rating" value="1" />
+                      <label for="bookmark-1stars">1 Stars</label>
+                  </fieldset>
+                  <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
+                  <input type="button" name="SaveBookmark" id='bookmark-save' class='formBtn button' value="Save Bookmark" />
+                  
+            </form>
+        </div>`;
+      return htmlText;
+    }
+  }
+
   function generateItemElement(item) {
     let htmlText = '';
     const ratingString = generateRatingStars(item.rating);
@@ -63,19 +105,23 @@ const bookmarkList = (function() {
     <span class='stars'>${ratingString}</span></p>`;
     
     if (item.expanded === true) {
-      htmlText = htmlTitle + `
-      <p class="bookmark-drop-down">${item.desc}</p>
-      <p>
-      <p class="go-to-site"><a href="${item.url}" target="_blank">Go to Site</a></button></p>
-      <button class="edit">Edit</button>
-      <button class="js-item-delete">Delete</button>
-                
-       </p>
-      </div>`;
+      htmlText = htmlTitle + generateExpandedBookmarkHtml(item);
       return htmlText;
     }
 
     return htmlTitle + '</div>';
+  }
+
+  function generateExpandedBookmarkHtml(item) {
+    return `
+    <p class="bookmark-drop-down">${item.desc}</p>
+    <p>
+    <p class="go-to-site"><a href="${item.url}" target="_blank">Go to Site</a></button></p>
+    <button class="js-item-edit">Edit</button>
+    <button class="js-item-delete">Delete</button>
+              
+     </p>
+    </div>`;
   }
 
   function generateRatingStars(ratingLevel) {
@@ -90,7 +136,14 @@ const bookmarkList = (function() {
   function generateBookmarkItemsString(bookmarks) {
     let items = [];
     items = bookmarks.map((item) => generateItemElement(item));
-    items.unshift(generateAddBookmarkHtml());
+    if (store.addingBookmark === true) {
+      items.unshift(generateAddBookmarkHtml());
+    }
+    
+    if (store.editingBookmark === true) {
+      items.unshift(generateEditBookmarkHtml());
+    }
+    
     return items.join('');
   }
 
@@ -150,6 +203,23 @@ const bookmarkList = (function() {
 
       //update store
       store.addingBookmark = !store.addingBookmark;
+
+      //render()
+      render();
+    });
+  }
+
+  function handleEditBookmarkButton() {
+    console.log('handle entered');
+
+    $('.js-items').on('click', '.js-item-edit', event => {
+      event.preventDefault();
+      
+      //get user data --> Done by click
+
+      //update store
+      //TODO: On Edit Save, flip the editingbookmark back
+      store.editingBookmark = !store.editingBookmark;
 
       //render()
       render();
@@ -222,6 +292,7 @@ const bookmarkList = (function() {
     handleAddBookmarkSaveButton();
     handleCloseError();
     handleDeleteItemClicked();
+    handleEditBookmarkButton();
   }
 
   return {
