@@ -1,0 +1,116 @@
+main {
+  padding-top: 20px;
+  font-family: 'Montserrat', sans-serif;
+  color: #000807;
+}
+
+main .row {
+  margin-bottom: 20px;
+}
+
+.box {
+  height: 200px;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.black {
+  background-color: black;
+  color: white;
+}
+
+.green {
+  background-color: green;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.dublin {
+  max-width: 100%;
+  display: block;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.4;
+}
+
+
+h1 {
+  font-family: 'Amatic SC', cursive;
+}
+
+html { 
+  background: url(images/dublinlibrarytransparent.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.col-12 {
+  background-color: #B9A6AF;
+  padding-bottom: 10px;
+}
+
+.minratingdiv {
+  text-align:right;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  padding: 0.7rem 1.8rem;
+  margin: 0;
+  text-decoration: none;
+  background: #393E41;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, 
+              transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:hover,
+button:focus {
+  background: rgb(101, 109, 114);
+}
+
+button:focus {
+  outline: 1px solid #fff;
+  outline-offset: -4px;
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+select {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+}
+
+.bookmark {
+  border: 3px black solid;
+  background-color: #E8F7EE;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  position: relative;
+}
+
+.stars {
+  position: absolute;
+  right: 20px;
+}
