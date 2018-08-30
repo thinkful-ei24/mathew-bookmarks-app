@@ -11,6 +11,15 @@ const store = (function() {
     this.items.push(item);
   };
 
+  const findById = function(id) {
+    return this.items.find(item => item.id === id);
+  };
+
+  const findAndUpdate = function(id, newData) {
+    const item = this.findById(id);
+    Object.assign(item, newData);
+  };
+
   //bookmarks: [{cuid: afhahfadf, title: 'Title goes here',
   //             url: 'http://fakfjkajfkj', description: 'fdkajfkajf',
   //             rating: 2, expanded: false}]
@@ -39,6 +48,8 @@ const store = (function() {
     minRatingShown: 0,
 
     addItem,
+    findById,
+    findAndUpdate
     //setError,
     //findById,
     //findAndDelete,

@@ -204,3 +204,7 @@ transform 150ms ease;
 .go-to-site a {
   color:white;
 }
+
+.js-title-area {
+  margin: 0;
+}
