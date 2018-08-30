@@ -56,6 +56,7 @@ html {
 .col-12 {
   background-color: #B9A6AF;
   padding-bottom: 10px;
+  border-radius: 5px;
 }
 
 .minratingdiv {
@@ -113,4 +114,16 @@ select {
 .stars {
   position: absolute;
   right: 20px;
+}
+
+.error-message {
+  display: block;
+  margin-top: -3px;
+  padding: 5px;
+  border: 2px black solid;
+  font-size: 12px;
+}
+
+.error-div {
+  padding-top: 4px;
 }
