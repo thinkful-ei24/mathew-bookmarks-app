@@ -63,7 +63,7 @@ html {
   text-align:right;
 }
 
-button {
+button, .button {
   display: inline-block;
   border: none;
   padding: 0.7rem 1.8rem;
@@ -111,6 +111,10 @@ select {
   position: relative;
 }
 
+.addbookmark {
+  height: 215px;
+}
+
 .stars {
   position: absolute;
   right: 20px;
@@ -126,4 +130,33 @@ select {
 
 .error-div {
   padding-top: 4px;
+}
+
+.bookmark-drop-down {
+  padding-top: 5px;
+  margin-top: 5px;
+  border-top: 2px solid black;
+}
+
+.edit, .delete {
+  font-size: 0.7rem;
+}
+
+
+.titlelink {
+  float: left;
+}
+
+.ratingarea {
+ float: left;
+}
+
+.form-description {
+  float: left;
+}
+
+.formBtn {
+  float: right;
+  width: 200px;
+  margin-top: 7px;
 }
