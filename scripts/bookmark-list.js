@@ -6,23 +6,26 @@ const bookmarkList = (function() {
 
   function generateItemElement(item) {
 
-    console.log(item)
-    let itemTitle = `${item.name}`;
-    // if (!item.checked) {
-    //   itemTitle = `
-    //     <form class="js-edit-item">
-    //       <input class="shopping-item type="text" value="${item.name}" />
-    //     </form>
-    //   `;
-    // }
-
-
+    let htmlText = '';
     const ratingString = generateRatingStars(item.rating);
+    
+    let htmlTitle = `<div class='bookmark js-bookmark-element data-item-id=${item.id}'>${item.title}
+    <span class='stars'>${ratingString}</span>`;
+    
+    if (item.expanded === true) {
+      htmlText = htmlTitle + `
+      <p class="bookmark-drop-down">${item.description}</p>
+      <p>
+      <p class="go-to-site"><a href="${item.url}">Go to Site</a></button></p>
+      <button class="edit">Edit</button>
+      <button class="delete">Delete</button>
+                
+       </p>
+      </div>`;
+      return htmlText;
+    }
 
-    return `
-    <div class='bookmark js-bookmark-element data-item-id=${item.id}'>${item.title}
-    <span class='stars'>${ratingString}</span></div>
-    `;
+    return htmlTitle + '</div>';
   }
 
   function generateRatingStars(ratingLevel) {
@@ -40,13 +43,6 @@ const bookmarkList = (function() {
   }
 
   function render() {
-    // if (store.error) {
-    //   const el = generateError(store.error);
-    //   $('.error-container').html(el);
-    // } else {
-    //   $('.error-container').empty();
-    // }
-
     // Filter item list if store prop is true by item.checked === false
     let items = store.items;
 
@@ -63,8 +59,17 @@ const bookmarkList = (function() {
     
   }
 
+  function handleAddBookmark() {
+    console.log('handle entered');
+    $('.addBtn').on('click', event => {
+      event.preventDefault();
+      console.log(event);
+    });
+  }
+
   function bindEventListeners() {
     console.log('Bind Event Listeners')
+    handleAddBookmark();
   }
 
   return {

@@ -140,6 +140,10 @@ select {
 
 .edit, .delete {
   font-size: 0.7rem;
+  position: relative;
+  left: 5px;
+  top: 14px;
+  margin-top: 2px;
 }
 
 
@@ -159,4 +163,44 @@ select {
   float: right;
   width: 200px;
   margin-top: 7px;
+}
+
+.go-to-site {
+  width: 132px;
+  position: relative;
+  bottom: -12px;
+  height: 40px;
+  display: inline-block;
+  border: none;
+  padding: 0.7rem 1.8rem;
+  margin: 0;
+  text-decoration: none;
+  background: #393E41;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, 
+transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.go-to-site:hover,
+.go-to-site:focus {
+  background: rgb(101, 109, 114);
+}
+
+.go-to-site:focus {
+  outline: 1px solid #fff;
+  outline-offset: -4px;
+}
+
+.go-to-site:active {
+  transform: scale(0.99);
+}
+
+.go-to-site a {
+  color:white;
 }
