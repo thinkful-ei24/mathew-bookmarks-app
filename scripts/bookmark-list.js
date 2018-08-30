@@ -89,6 +89,13 @@ const bookmarkList = (function() {
     // Filter item list if store prop is true by item.checked === false
     let items = store.items;
 
+    if (store.error) {
+      const el = generateError(store.error);
+      $('.error-div').html(el);
+    } else {
+      $('.error-div').empty();
+    }
+
     // if (store.hideCheckedItems) {
     //   items = store.items.filter(item => !item.checked);
     // }
@@ -147,14 +154,22 @@ const bookmarkList = (function() {
     });
   }
 
-  function generateErrorMessageForDOM(error) {
-    const errorString = `<p class="error-message">${error.responseJSON.message}</p>`;
-    return errorString;
+  function generateError(err) {
+    let message = '';
+    if (err.responseJSON && err.responseJSON.message) {
+      message = err.responseJSON.message;
+    } else {
+      message = `${err.code} Server Error`;
+    }
+
+    return `
+      <section class="error-message">
+        <button id="cancel-error">X</button>
+        <p>${message}</p>
+      </section>
+    `;
   }
 
-  function clearErrorMessageForDOM() {
-    return '<p class="error-message"></p>';
-  }
   function handleAddBookmarkSaveButton() {
     $('.js-items').on('click', '#bookmark-save', event => {
       event.preventDefault();
@@ -164,24 +179,27 @@ const bookmarkList = (function() {
       const jsonFormData = $('.1form-bookmark').serializeJson();
       const newItem = '';
 
-      //change the store
       api.createItem(jsonFormData,
         (newItem) => {
+          //change the store
           store.addItem(newItem);
-          clearErrorMessageForDOM();
+          //render
           render();
         },
         (err) => {
-          //TODO ERROR
+          //change the store
           store.setError(err);
-          //TODO This needs to be stored in Store, then error printed
-          //this way is just updating the dom directly.
-          //Only update dom in render()
-          $('.error-div').html(generateErrorMessageForDOM(err));
-          
+          //render
           render();
         }
       );
+    });
+  }
+
+  function handleCloseError() {
+    $('.error-div').on('click', '#cancel-error', () => {
+      store.setError(null);
+      render();
     });
   }
 
@@ -190,6 +208,7 @@ const bookmarkList = (function() {
     handleAddBookmarkButton();
     handleClickTitleToExpand();
     handleAddBookmarkSaveButton();
+    handleCloseError();
   }
 
   return {
