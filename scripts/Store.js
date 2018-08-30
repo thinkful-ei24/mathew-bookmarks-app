@@ -2,10 +2,10 @@
 'use strict';
 
 const store = (function() {
-  //What does this do??
-  // const setError = function(error) {
-  //   this.error = error;
-  // }
+  //CONFUSION: What does this do??
+  const setError = function(error) {
+    this.error = error;
+  }
 
   const addItem = function(item) {
     this.items.push(item);
@@ -49,8 +49,8 @@ const store = (function() {
 
     addItem,
     findById,
-    findAndUpdate
-    //setError,
+    findAndUpdate,
+    setError,
     //findById,
     //findAndDelete,
     //findAndUpdate,

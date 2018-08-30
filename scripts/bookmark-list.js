@@ -13,28 +13,28 @@ const bookmarkList = (function() {
               <input type="text" name='title' id='bookmark-title' />
               
               <label for="link">Link</label>
-              <input type="text" name='link' id='bookmark-link' />
+              <input type="text" name='url' id='bookmark-link' />
             </fieldset>
             <fieldset class="form-description">
               <label for="description">Description</label>
-              <input type="textarea" name='description' id='bookmark-description' />
+              <input type="textarea" name='desc' id='bookmark-description' />
             </fieldset>
               <fieldset class='ratingarea'>
                   <legend>Your Rating</legend>
           
-                  <input type="radio" id="bookmark-5stars" name="bookmark-star-rating" checked />
+                  <input type="radio" id="bookmark-5stars" name="rating" value="5" checked />
                       <label for="bookmark-5stars">5 Stars</label>
                   
-                      <input type="radio" id="bookmark-4stars" name="bookmark-star-rating" checked />
+                      <input type="radio" id="bookmark-4stars" name="rating" value="4" />
                       <label for="bookmark-4stars">4 Stars</label>
                   
-                      <input type="radio" id="bookmark-3stars" name="bookmark-star-rating" checked />
+                      <input type="radio" id="bookmark-3stars" name="rating" value="3" />
                       <label for="bookmark-3stars">3 Stars</label>
                   
-                      <input type="radio" id="bookmark-2stars" name="bookmark-star-rating" checked />
+                      <input type="radio" id="bookmark-2stars" name="rating" value="2" />
                       <label for="bookmark-2stars">2 Stars</label>
                   
-                      <input type="radio" id="bookmark-1stars" name="bookmark-star-rating" checked />
+                      <input type="radio" id="bookmark-1stars" name="rating" value="1" />
                       <label for="bookmark-1stars">1 Stars</label>
                   </fieldset>
                   <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
@@ -50,7 +50,7 @@ const bookmarkList = (function() {
     let htmlText = '';
     const ratingString = generateRatingStars(item.rating);
     
-    let htmlTitle = `<div class='bookmark js-bookmark-element data-item-id=${item.id}'><p class='js-title-area'>${item.title}
+    let htmlTitle = `<div class='bookmark js-bookmark-element' data-item-id="${item.id}"><p class='js-title-area'>${item.title}
     <span class='stars'>${ratingString}</span></p>`;
     
     if (item.expanded === true) {
@@ -102,6 +102,15 @@ const bookmarkList = (function() {
     
   }
 
+  $.fn.extend({
+    serializeJson: function() {
+      const formData = new FormData(this[0]);
+      const o = {};
+      formData.forEach((val, name) => o[name] = val);
+      return JSON.stringify(o);
+    }
+  });
+
   function handleAddBookmarkButton() {
     console.log('handle entered');
 
@@ -119,11 +128,9 @@ const bookmarkList = (function() {
   }
 
   function getItemIdFromElement(item) {
-    //CONFUSION: I was having trouble with $(item).closest('.js-item-element').data('item-id');
     return $(item)
       .parent('.js-bookmark-element')
-      .attr('class')
-      .slice(42);
+      .data('item-id');
   }
 
   function handleClickTitleToExpand() {
@@ -140,10 +147,49 @@ const bookmarkList = (function() {
     });
   }
 
+  function generateErrorMessageForDOM(error) {
+    const errorString = `<p class="error-message">${error.responseJSON.message}</p>`;
+    return errorString;
+  }
+
+  function clearErrorMessageForDOM() {
+    return '<p class="error-message"></p>';
+  }
+  function handleAddBookmarkSaveButton() {
+    $('.js-items').on('click', '#bookmark-save', event => {
+      event.preventDefault();
+      console.log('Save pressed')
+
+      //get data from user
+      const jsonFormData = $('.1form-bookmark').serializeJson();
+      const newItem = '';
+
+      //change the store
+      api.createItem(jsonFormData,
+        (newItem) => {
+          store.addItem(newItem);
+          clearErrorMessageForDOM();
+          render();
+        },
+        (err) => {
+          //TODO ERROR
+          store.setError(err);
+          //TODO This needs to be stored in Store, then error printed
+          //this way is just updating the dom directly.
+          //Only update dom in render()
+          $('.error-div').html(generateErrorMessageForDOM(err));
+          
+          render();
+        }
+      );
+    });
+  }
+
   function bindEventListeners() {
     console.log('Bind Event Listeners')
     handleAddBookmarkButton();
     handleClickTitleToExpand();
+    handleAddBookmarkSaveButton();
   }
 
   return {
