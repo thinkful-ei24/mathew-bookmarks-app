@@ -5,7 +5,7 @@ const api = (function() {
 
   const getItems = function( callback ){
     $.getJSON(BASE_URL, callback)
-  }
+  };
 
   const createItem = function(name, onSuccess, onError) {
     const newItem = name;
@@ -19,11 +19,20 @@ const api = (function() {
       success: onSuccess,
       error: onError
     });
-  }
+  };
+
+  const deleteItem = function(id, callback) {
+    $.ajax({
+      url: BASE_URL+ '/' + id,
+      method: 'DELETE',
+      success: callback
+    });
+  };
 
   return {
     createItem,
     getItems,
+    deleteItem
   }
 
 

@@ -2,7 +2,6 @@
 'use strict';
 
 const store = (function() {
-  //CONFUSION: What does this do??
   const setError = function(error) {
     this.error = error;
   }
@@ -15,13 +14,17 @@ const store = (function() {
     return this.items.find(item => item.id === id);
   };
 
+  const findAndDelete = function(id) {
+    this.items = this.items.filter(item => item.id !== id);
+  };
+
   const findAndUpdate = function(id, newData) {
     const item = this.findById(id);
     Object.assign(item, newData);
   };
 
-  //bookmarks: [{cuid: afhahfadf, title: 'Title goes here',
-  //             url: 'http://fakfjkajfkj', description: 'fdkajfkajf',
+  //bookmarks: [{id: afhahfadf, title: 'Title goes here',
+  //             url: 'http://fakfjkajfkj', desc: 'fdkajfkajf',
   //             rating: 2, expanded: false}]
 
   //Example return data: {
@@ -43,8 +46,7 @@ const store = (function() {
     findById,
     findAndUpdate,
     setError,
-    //findById,
-    //findAndDelete,
+    findAndDelete,
     //findAndUpdate,
     //setMinRating
   }

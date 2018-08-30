@@ -3,6 +3,15 @@
 // eslint-disable-next-line no-unused-vars
 
 const bookmarkList = (function() {
+ 
+  $.fn.extend({
+    serializeJson: function() {
+      const formData = new FormData(this[0]);
+      const o = {};
+      formData.forEach((val, name) => o[name] = val);
+      return JSON.stringify(o);
+    }
+  });
 
   function generateAddBookmarkHtml() {
     if (store.addingBookmark === true) {
@@ -59,7 +68,7 @@ const bookmarkList = (function() {
       <p>
       <p class="go-to-site"><a href="${item.url}" target="_blank">Go to Site</a></button></p>
       <button class="edit">Edit</button>
-      <button class="delete">Delete</button>
+      <button class="js-item-delete">Delete</button>
                 
        </p>
       </div>`;
@@ -83,6 +92,28 @@ const bookmarkList = (function() {
     items = bookmarks.map((item) => generateItemElement(item));
     items.unshift(generateAddBookmarkHtml());
     return items.join('');
+  }
+
+  function generateError(err) {
+    let message = '';
+    if (err.responseJSON && err.responseJSON.message) {
+      message = err.responseJSON.message;
+    } else {
+      message = `${err.code} Server Error`;
+    }
+
+    return `
+      <section class="error-message">
+        <button id="cancel-error">X</button>
+        <p>${message}</p>
+      </section>
+    `;
+  }
+
+  function getItemIdFromElement(item) {
+    return $(item)
+      .parent('.js-bookmark-element')
+      .data('item-id');
   }
 
   function render() {
@@ -109,15 +140,6 @@ const bookmarkList = (function() {
     
   }
 
-  $.fn.extend({
-    serializeJson: function() {
-      const formData = new FormData(this[0]);
-      const o = {};
-      formData.forEach((val, name) => o[name] = val);
-      return JSON.stringify(o);
-    }
-  });
-
   function handleAddBookmarkButton() {
     console.log('handle entered');
 
@@ -134,12 +156,6 @@ const bookmarkList = (function() {
     });
   }
 
-  function getItemIdFromElement(item) {
-    return $(item)
-      .parent('.js-bookmark-element')
-      .data('item-id');
-  }
-
   function handleClickTitleToExpand() {
     $('.js-items').on('click', '.js-title-area', event => {
       //get user data
@@ -154,22 +170,7 @@ const bookmarkList = (function() {
     });
   }
 
-  function generateError(err) {
-    let message = '';
-    if (err.responseJSON && err.responseJSON.message) {
-      message = err.responseJSON.message;
-    } else {
-      message = `${err.code} Server Error`;
-    }
-
-    return `
-      <section class="error-message">
-        <button id="cancel-error">X</button>
-        <p>${message}</p>
-      </section>
-    `;
-  }
-
+  
   function handleAddBookmarkSaveButton() {
     $('.js-items').on('click', '#bookmark-save', event => {
       event.preventDefault();
@@ -196,6 +197,17 @@ const bookmarkList = (function() {
     });
   }
 
+  function handleDeleteItemClicked() {
+    $('.js-items').on('click', '.js-item-delete', event => {
+      const id = getItemIdFromElement(event.currentTarget);
+
+      api.deleteItem(id, () => {
+        store.findAndDelete(id);
+        render();
+      })
+    });
+  }
+
   function handleCloseError() {
     $('.error-div').on('click', '#cancel-error', () => {
       store.setError(null);
@@ -209,6 +221,7 @@ const bookmarkList = (function() {
     handleClickTitleToExpand();
     handleAddBookmarkSaveButton();
     handleCloseError();
+    handleDeleteItemClicked();
   }
 
   return {
