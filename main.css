@@ -223,3 +223,7 @@ transform 150ms ease;
   height: 3rem;
   width: 75%;
 }
+
+.form-description * {
+  vertical-align: top;
+}

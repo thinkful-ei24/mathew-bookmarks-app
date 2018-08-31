@@ -35,6 +35,8 @@ const store = (function() {
   //    "rating": 4
   //  },
 
+  //TODO: editingBookmark: id or false? remember strings are true
+
   return {
     items: [],
     error: null,
