@@ -50,6 +50,23 @@
   width: 100%;
 }
 
+@media (max-width: 640px) {
+  .addbookmark {
+    height: 333px;
+  }
+}
+
+@media (max-width: 500px) {
+  .addbookmark {
+    height: 408px;
+  }
+}
+
+@media (max-width: 320px) {
+  .addbookmark {
+    height: 465px;
+  }
+}
 
 /* Non-mobile, grid */
 @media only screen and (min-width: 640px) {
@@ -73,3 +90,4 @@
     width: 100%;
   }
 }
+

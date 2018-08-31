@@ -152,7 +152,7 @@ select {
 }
 
 .addbookmark {
-  height: 215px;
+  height: 240px;
 }
 
 .stars {
@@ -200,7 +200,6 @@ select {
 }
 
 .formBtn {
-  float: right;
   width: 200px;
 }
 

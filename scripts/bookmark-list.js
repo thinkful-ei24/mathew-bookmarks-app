@@ -36,7 +36,6 @@ const bookmarkList = (function() {
           <label for="description">Description</label>
           <textarea type="textarea" name='desc' id='bookmark-description' placeholder='eg., A webpage about cats'></textarea>
         </fieldset>
-        <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel" />
         <fieldset class='ratingarea'>
           <legend>Your Rating</legend>
         
@@ -56,6 +55,7 @@ const bookmarkList = (function() {
           <label for="bookmark-1stars">1 Stars</label>
         </fieldset>
                 
+        <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel" />
         <input type="button" name="SaveBookmark" id='add-bookmark-save' class='formBtn button' value="Save" />
                 
       </form>
