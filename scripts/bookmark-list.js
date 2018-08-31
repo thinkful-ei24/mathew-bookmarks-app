@@ -13,54 +13,100 @@ const bookmarkList = (function() {
     }
   });
 
-  function generateAddBookmarkHtml() {
-    let addOrEdit = '';
+  function generateBookmarkHtml() {
+    if (store.addingBookmark) {
+      return generateAddBookmarkHtml();
+    } else if (store.editingBookmark !== false) {
+      return generateEditBookmarkHtml();
+    }
+  }
 
-    if (store.addingBookmark === true) {
-      addOrEdit = 'Add';
-    } else if (store.editingBookmark === true) {
-      addOrEdit = 'Edit';
+  function generateAddBookmarkHtml() {
+    const htmlText = `
+    <div class="bookmark addbookmark">
+      <form class="1form-bookmark">Add Bookmark
+        <fieldset class='titleLink'>
+          <label for="title">Title</label>
+          <input type="text" name='title' id='bookmark-title' placeholder='eg., Cats and Stuff' />
+            
+          <label for="link">Link</label>
+          <input type="text" name='url' id='bookmark-link' placeholder='eg., http://www.google.com' />
+        </fieldset>
+        <fieldset class="form-description">
+          <label for="description">Description</label>
+          <textarea type="textarea" name='desc' id='bookmark-description' placeholder='eg., A webpage about cats'></textarea>
+        </fieldset>
+        <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
+        <fieldset class='ratingarea'>
+          <legend>Your Rating</legend>
+        
+          <input type="radio" id="bookmark-5stars" name="rating" value="5" checked />
+          <label for="bookmark-5stars">5 Stars</label>
+              
+          <input type="radio" id="bookmark-4stars" name="rating" value="4" />
+          <label for="bookmark-4stars">4 Stars</label>
+      
+          <input type="radio" id="bookmark-3stars" name="rating" value="3" />
+          <label for="bookmark-3stars">3 Stars</label>
+      
+          <input type="radio" id="bookmark-2stars" name="rating" value="2" />
+          <label for="bookmark-2stars">2 Stars</label>
+      
+          <input type="radio" id="bookmark-1stars" name="rating" value="1" />
+          <label for="bookmark-1stars">1 Stars</label>
+        </fieldset>
+                
+        <input type="button" name="SaveBookmark" id='bookmark-save' class='formBtn button' value="Save Bookmark" />
+                
+      </form>
+    </div>`;
+  return htmlText;
+  }
+
+  function generateEditBookmarkHtml() {
+    const item = store.findById(store.editingBookmark);
+    let ratingHTML = '';
+    
+    for(let i=1; i <= 5; i++ ) {
+      if ( i === item.rating) {
+        ratingHTML += `
+        <input type="radio" id="bookmark-${i}stars" name="rating" value="${i}" checked />
+        <label for="bookmark-${i}stars">${i} Stars</label>
+        `;
+      } else {
+        ratingHTML += `
+          <input type="radio" id="bookmark-${i}stars" name="rating" value="${i}" />
+          <label for="bookmark-${i}stars">${i} Stars</label>`;
+      }
     }
 
     const htmlText = `
-      <div class="bookmark addbookmark">
-        <form class="1form-bookmark">${addOrEdit} Bookmark
-          <fieldset class='titleLink'>
-            <label for="title">Title</label>
-            <input type="text" name='title' id='bookmark-title' placeholder='eg., Cats and Stuff' />
-              
-            <label for="link">Link</label>
-            <input type="text" name='url' id='bookmark-link' placeholder='eg., http://www.google.com' />
-          </fieldset>
-          <fieldset class="form-description">
-            <label for="description">Description</label>
-            <textarea type="textarea" name='desc' id='bookmark-description' placeholder='eg., A webpage about cats' />
-          </fieldset>
-          <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
-          <fieldset class='ratingarea'>
-            <legend>Your Rating</legend>
-          
-            <input type="radio" id="bookmark-5stars" name="rating" value="5" checked />
-            <label for="bookmark-5stars">5 Stars</label>
+    <div class="bookmark addbookmark">
+      <form class="1form-bookmark">Edit Bookmark
+        <fieldset class='titleLink'>
+          <label for="title">Title</label>
+          <input type="text" name='title' id='bookmark-title' placeholder='eg., Cats and Stuff' value='${item.title}' />
+            
+          <label for="link">Link</label>
+          <input type="text" name='url' id='bookmark-link' placeholder='eg., http://www.google.com' value='${item.url}' />
+        </fieldset>
+        <fieldset class="form-description">
+          <label for="description">Description</label>
+          <textarea type="textarea" name='desc' id='bookmark-description' placeholder='eg., A webpage about cats'>${item.desc}</textarea>
+        </fieldset>
+        <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
+        <fieldset class='ratingarea'>
+          <legend>Your Rating</legend>
+        
+          ${ratingHTML}
+        </fieldset>
                 
-            <input type="radio" id="bookmark-4stars" name="rating" value="4" />
-            <label for="bookmark-4stars">4 Stars</label>
-        
-            <input type="radio" id="bookmark-3stars" name="rating" value="3" />
-            <label for="bookmark-3stars">3 Stars</label>
-        
-            <input type="radio" id="bookmark-2stars" name="rating" value="2" />
-            <label for="bookmark-2stars">2 Stars</label>
-        
-            <input type="radio" id="bookmark-1stars" name="rating" value="1" />
-            <label for="bookmark-1stars">1 Stars</label>
-          </fieldset>
-                  
-          <input type="button" name="SaveBookmark" id='bookmark-save' class='formBtn button' value="Save Bookmark" />
-                  
-        </form>
-      </div>`;
+        <input type="button" name="SaveBookmark" id='bookmark-save' class='formBtn button' value="Save Bookmark" />
+                
+      </form>
+    </div>`;
     return htmlText;
+    
   }
 
   function generateItemElement(item) {
@@ -103,7 +149,7 @@ const bookmarkList = (function() {
     let items = [];
     items = bookmarks.map((item) => generateItemElement(item));
     if (store.addingBookmark || store.editingBookmark) {
-      items.unshift(generateAddBookmarkHtml());
+      items.unshift(generateBookmarkHtml());
     }
     
     return items.join('');
@@ -251,13 +297,14 @@ const bookmarkList = (function() {
       
       //get user data --> Done by click
       const id = getItemIdFromElement(event.currentTarget);
+      store.editingBookmark = id;
       //Now that I have ID, I need to get all the form data again
       //then I need to do api.updateItem(id, {jsonData})
       //Update store.findAndUpdate
       console.log(id)
       //update store
       //TODO: On Edit Save, flip the editingbookmark back
-      store.editingBookmark = !store.editingBookmark;
+      //store.editingBookmark = !store.editingBookmark;
 
       //render()
       render();
