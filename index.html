@@ -11,19 +11,19 @@
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700|Montserrat" rel="stylesheet">
 </head>
 <body>
-  <main role="main">
+  <main>
      <!-- Look at using Section element instead of some divs -->
     <div class="row">
-      <div class="col-12">
+      <section class="col-12" role="banner">
         <h1>My Bookmark App</h1>
-        <div class="col-4">
+        <section class="col-4">
           <form name="main_form">
             <button class="addBtn button">Add Bookmark</button>
           </form>
-        </div>
-        <div class="col-4 error-div">
-        </div>
-        <div class="col-4 minratingdiv">
+        </section>
+        <section class="col-4 error-div" role="region">
+        </section>
+        <section class="col-4 minratingdiv" role="region">
           <select name="minimum_rating" form="main_form" class="minimum_rating_box">
               <option value="" disabled selected>Minimum Rating</option>
               <option value="5">5 Star</option>
@@ -33,7 +33,8 @@
               <option value="1">1 Star</option>
               <option value="showAll">Show All</option>
             </select>
-      </div>
+          </section>
+        </section>
 
       <section class="col-12 js-items">
 
