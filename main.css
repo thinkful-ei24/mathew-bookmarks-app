@@ -153,16 +153,26 @@ select {
 
 .ratingarea {
  float: left;
+ width: 63%;
 }
 
 .form-description {
   float: left;
+  width: 63%;
 }
 
 .formBtn {
   float: right;
   width: 200px;
-  margin-top: 7px;
+}
+
+#bookmark-cancel {
+  margin-top: 24px;
+  position: relative;
+}
+
+#bookmark-save {
+  margin-top: 14px;
 }
 
 .go-to-site {
@@ -207,4 +217,9 @@ transform 150ms ease;
 
 .js-title-area {
   margin: 0;
+}
+
+#bookmark-description {
+  height: 3rem;
+  width: 75%;
 }

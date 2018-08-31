@@ -28,6 +28,7 @@ const bookmarkList = (function() {
               <label for="description">Description</label>
               <input type="textarea" name='desc' id='bookmark-description' />
             </fieldset>
+            <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
               <fieldset class='ratingarea'>
                   <legend>Your Rating</legend>
           
@@ -46,7 +47,7 @@ const bookmarkList = (function() {
                       <input type="radio" id="bookmark-1stars" name="rating" value="1" />
                       <label for="bookmark-1stars">1 Stars</label>
                   </fieldset>
-                  <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
+                  
                   <input type="button" name="SaveBookmark" id='bookmark-save' class='formBtn button' value="Save Bookmark" />
                   
             </form>
@@ -70,6 +71,7 @@ const bookmarkList = (function() {
               <label for="description">Description</label>
               <input type="textarea" name='desc' id='bookmark-description' />
             </fieldset>
+            <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
               <fieldset class='ratingarea'>
                   <legend>Your Rating</legend>
           
@@ -88,7 +90,6 @@ const bookmarkList = (function() {
                       <input type="radio" id="bookmark-1stars" name="rating" value="1" />
                       <label for="bookmark-1stars">1 Stars</label>
                   </fieldset>
-                  <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
                   <input type="button" name="SaveBookmark" id='bookmark-save' class='formBtn button' value="Save Bookmark" />
                   
             </form>
@@ -209,6 +210,67 @@ const bookmarkList = (function() {
     });
   }
 
+  function handleClickTitleToExpand() {
+    $('.js-items').on('click', '.js-title-area', event => {
+      //get user data
+      const id = getItemIdFromElement(event.target);
+      const item = store.findById(id);
+
+      //update store
+      store.findAndUpdate(id, { expanded: !item.expanded });
+      
+      //render
+      render();
+    });
+  }
+
+  function handleAddBookmarkSaveButton() {
+    $('.js-items').on('click', '#bookmark-save', event => {
+      event.preventDefault();
+      console.log('Save pressed')
+
+      //get data from user
+      const jsonFormData = $('.1form-bookmark').serializeJson();
+      const newItem = '';
+
+      api.createItem(jsonFormData,
+        (newItem) => {
+          //change the store
+          store.addItem(newItem);
+          //render
+          render();
+          store.addingBookmark = false;
+          //CONFUSION: I want Add Bookmark to run, then close once save is hit.
+          render();
+        },
+        (err) => {
+          //change the store
+          store.setError(err);
+          //render
+          render();
+        }
+      );
+    });
+  }
+
+  function handleCloseError() {
+    $('.error-div').on('click', '#cancel-error', () => {
+      store.setError(null);
+      render();
+    });
+  }
+
+  function handleDeleteItemClicked() {
+    $('.js-items').on('click', '.js-item-delete', event => {
+      const id = getItemIdFromElement(event.currentTarget);
+
+      api.deleteItem(id, () => {
+        store.findAndDelete(id);
+        render();
+      })
+    });
+  }
+
   function handleEditBookmarkButton() {
     console.log('handle entered');
 
@@ -226,61 +288,10 @@ const bookmarkList = (function() {
     });
   }
 
-  function handleClickTitleToExpand() {
-    $('.js-items').on('click', '.js-title-area', event => {
-      //get user data
-      const id = getItemIdFromElement(event.target);
-      const item = store.findById(id);
-
-      //update store
-      store.findAndUpdate(id, { expanded: !item.expanded });
-      
-      //render
-      render();
-    });
-  }
-
-  
-  function handleAddBookmarkSaveButton() {
-    $('.js-items').on('click', '#bookmark-save', event => {
-      event.preventDefault();
-      console.log('Save pressed')
-
-      //get data from user
-      const jsonFormData = $('.1form-bookmark').serializeJson();
-      const newItem = '';
-
-      api.createItem(jsonFormData,
-        (newItem) => {
-          //change the store
-          store.addItem(newItem);
-          //render
-          render();
-        },
-        (err) => {
-          //change the store
-          store.setError(err);
-          //render
-          render();
-        }
-      );
-    });
-  }
-
-  function handleDeleteItemClicked() {
-    $('.js-items').on('click', '.js-item-delete', event => {
-      const id = getItemIdFromElement(event.currentTarget);
-
-      api.deleteItem(id, () => {
-        store.findAndDelete(id);
-        render();
-      })
-    });
-  }
-
-  function handleCloseError() {
-    $('.error-div').on('click', '#cancel-error', () => {
-      store.setError(null);
+  function handleCancelButton() {
+    $('.js-items').on('click', '#bookmark-cancel', event => {
+      store.editingBookmark = false;
+      store.addingBookmark = false;
       render();
     });
   }
@@ -293,6 +304,7 @@ const bookmarkList = (function() {
     handleCloseError();
     handleDeleteItemClicked();
     handleEditBookmarkButton();
+    handleCancelButton();
   }
 
   return {
