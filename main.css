@@ -63,7 +63,7 @@ html {
   text-align:right;
 }
 
-button, .button {
+.button, #cancel-error {
   display: inline-block;
   border: none;
   padding: 0.7rem 1.8rem;
@@ -81,17 +81,17 @@ button, .button {
   -moz-appearance: none;
 }
 
-button:hover,
-button:focus {
+.button:hover, #cancel-error:hover,
+.button:focus, #cancel-error:focus {
   background: rgb(101, 109, 114);
 }
 
-button:focus {
+.button:focus, #cancel-error:focus {
   outline: 1px solid #fff;
   outline-offset: -4px;
 }
 
-button:active {
+.button:active, #cancel-error:active {
   transform: scale(0.99);
 }
 

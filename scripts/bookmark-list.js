@@ -128,9 +128,9 @@ const bookmarkList = (function() {
     return `
     <p class="bookmark-drop-down">${item.desc}</p>
     <p>
-    <p class="go-to-site"><a href="${item.url}" target="_blank">Visit Site</a></button></p>
-    <button class="js-item-edit">Edit</button>
-    <button class="js-item-delete">Delete</button>
+    <p class="go-to-site"><a href="${item.url}" target="_blank">Visit Site</a></p>
+    <button class="js-item-edit button">Edit</button>
+    <button class="js-item-delete button">Delete</button>
               
      </p>
     </div>`;
