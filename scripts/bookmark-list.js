@@ -147,9 +147,15 @@ const bookmarkList = (function() {
       $('.error-div').empty();
     }
 
-    // if (store.hideCheckedItems) {
-    //   items = store.items.filter(item => !item.checked);
-    // }
+    items = items.filter( item => {
+      if ( store.minRatingShown === 'showAll') {
+        return item;
+      } else if ( item.rating >= store.minRatingShown ) {
+        return item;
+      }
+    });
+
+    console.log(items)
 
     // render the shopping list in the DOM
     console.log('`render` ran');
