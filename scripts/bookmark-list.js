@@ -230,7 +230,6 @@ const bookmarkList = (function() {
       const item = store.findById(id);
 
       //update store
-      console.log(event)
       store.findAndUpdate(id, { expanded: !item.expanded });
 
       //render
@@ -276,9 +275,7 @@ const bookmarkList = (function() {
   function handleDeleteItemClicked() {
     $('.js-items').on('click', '.js-item-delete', event => {
       event.preventDefault();
-      console.log('inside')
       const id = getItemIdFromElement(event.currentTarget);
-      console.log(id)
       api.deleteItem(id, () => {
         store.findAndDelete(id);
         render();
@@ -308,7 +305,7 @@ const bookmarkList = (function() {
       
       //get data from user
       const jsonFormData = $('.1form-bookmark').serializeJson();
-      
+      console.log($('.1form-bookmark'))
       const newItem = '';
 
 

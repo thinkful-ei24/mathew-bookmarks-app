@@ -31,8 +31,8 @@ const api = (function() {
 
   const updateItem = function(itemData, onSuccess, onError) {
     const updatedItem = itemData;
-    console.log(itemData)
-    console.log(store.editingBookmark)
+    console.log('itemData from api.updateItem is ' + itemData)
+    console.log('store.editingBookmark from api.updateItem is ' + store.editingBookmark)
 
     $.ajax({
       url: BASE_URL + '/' + store.editingBookmark,
