@@ -171,7 +171,7 @@ const bookmarkList = (function() {
 
   function getItemIdFromElement(item) {
     return $(item)
-      .parent('.js-bookmark-element')
+      .siblings('.js-bookmark-element')
       .data('item-id');
   }
 
@@ -275,8 +275,10 @@ const bookmarkList = (function() {
 
   function handleDeleteItemClicked() {
     $('.js-items').on('click', '.js-item-delete', event => {
+      event.preventDefault();
+      console.log('inside')
       const id = getItemIdFromElement(event.currentTarget);
-
+      console.log(id)
       api.deleteItem(id, () => {
         store.findAndDelete(id);
         render();
@@ -290,7 +292,7 @@ const bookmarkList = (function() {
       
       //get user data --> Done by click
       const id = getItemIdFromElement(event.currentTarget);
-
+      
       //change the store
       store.editingBookmark = id;
 
@@ -299,7 +301,6 @@ const bookmarkList = (function() {
       
     });
   }
-
 
   function handleEditBookmarkSaveButton() {
     $('.js-items').on('click', '#edit-bookmark-save', event => {
