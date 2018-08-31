@@ -113,7 +113,7 @@ const bookmarkList = (function() {
     let htmlText = '';
     const ratingString = generateRatingStars(item.rating);
     
-    let htmlTitle = `<button class='bookmark js-bookmark-element' data-item-id="${item.id}"><p class='js-title-area'>${item.title}
+    let htmlTitle = `<button role='button' class='bookmark js-bookmark-element' data-item-id="${item.id}"><p class='js-title-area'>${item.title}
     <span class='stars'>${ratingString}</span></p>`;
     
     if (item.expanded === true) {
@@ -222,15 +222,16 @@ const bookmarkList = (function() {
   }
 
   function handleClickTitleToExpand() {
-    $('.js-items').on('click', '.js-title-area', event => {
-      event.preventDefault();
+    $('.js-items').on('click', '.js-bookmark-element', event => {
+      //event.preventDefault();
       //get user data
-      const id = getItemIdFromElement(event.target);
+      const id = $(event.currentTarget).data('item-id');
       const item = store.findById(id);
 
       //update store
+      console.log(event)
       store.findAndUpdate(id, { expanded: !item.expanded });
-      
+
       //render
       render();
     });
@@ -297,6 +298,7 @@ const bookmarkList = (function() {
       
     });
   }
+
 
   function handleEditBookmarkSaveButton() {
     $('.js-items').on('click', '#edit-bookmark-save', event => {
