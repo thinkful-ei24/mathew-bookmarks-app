@@ -132,7 +132,12 @@ const bookmarkList = (function() {
   }
 
   function render() {
-    // Filter item list if store prop is true by item.checked === false
+    //Code for MinValueFilter
+    //  Get MinValue from store
+    //  Filter items using minValueFilter number
+    //  Show items
+    //  Reset MinValue store value = store.resetMinValue()
+    //  Reset MinValue select box
     let items = store.items;
 
     if (store.error) {
@@ -263,13 +268,16 @@ const bookmarkList = (function() {
 
   function handleMinRatingChooser() {
     $('.minimum_rating_box').change(event => {
-      const minRatingValue = $(event.target).val();
       //get data from user
+      const minRatingValue = $(event.target).val();
+
+      console.log(minRatingValue)
 
       //update state
+      store.minRatingShown = minRatingValue;
 
       //render
-      
+      render();
     });
   }
 
