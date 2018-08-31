@@ -239,7 +239,11 @@ const bookmarkList = (function() {
       event.preventDefault();
       
       //get user data --> Done by click
-
+      const id = getItemIdFromElement(event.currentTarget);
+      //Now that I have ID, I need to get all the form data again
+      //then I need to do api.updateItem(id, {jsonData})
+      //Update store.findAndUpdate
+      console.log(id)
       //update store
       //TODO: On Edit Save, flip the editingbookmark back
       store.editingBookmark = !store.editingBookmark;
@@ -257,6 +261,18 @@ const bookmarkList = (function() {
     });
   }
 
+  function handleMinRatingChooser() {
+    $('.minimum_rating_box').change(event => {
+      const minRatingValue = $(event.target).val();
+      //get data from user
+
+      //update state
+
+      //render
+      
+    });
+  }
+
   function bindEventListeners() {
     console.log('Bind Event Listeners')
     handleAddBookmarkButton();
@@ -266,6 +282,7 @@ const bookmarkList = (function() {
     handleDeleteItemClicked();
     handleEditBookmarkButton();
     handleCancelButton();
+    handleMinRatingChooser();
   }
 
   return {
