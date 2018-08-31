@@ -23,7 +23,7 @@ const bookmarkList = (function() {
 
   function generateAddBookmarkHtml() {
     const htmlText = `
-    <div class="bookmark addbookmark">
+    <section class="bookmark addbookmark" role="region">
       <form class="1form-bookmark">Add Bookmark
         <fieldset class='titleLink'>
           <label for="title">Title</label>
@@ -59,7 +59,7 @@ const bookmarkList = (function() {
         <input type="button" name="SaveBookmark" id='add-bookmark-save' class='formBtn button' value="Save" />
                 
       </form>
-    </div>`;
+    </section>`;
   return htmlText;
   }
 
@@ -81,7 +81,7 @@ const bookmarkList = (function() {
     }
 
     const htmlText = `
-    <div class="bookmark addbookmark">
+    <section class="bookmark addbookmark" role="region">
       <form class="1form-bookmark">Edit Bookmark
         <fieldset class='titleLink'>
           <label for="title">Title</label>
@@ -104,7 +104,7 @@ const bookmarkList = (function() {
         <input type="button" name="SaveBookmark" id='edit-bookmark-save' class='formBtn button' value="Save" />
                 
       </form>
-    </div>`;
+    </section>`;
     return htmlText;
     
   }
@@ -162,7 +162,7 @@ const bookmarkList = (function() {
     }
 
     return `
-      <section class="error-message">
+      <section class="error-message" role="region">
         <button id="cancel-error">X</button>
         <p>${message}</p>
       </section>
