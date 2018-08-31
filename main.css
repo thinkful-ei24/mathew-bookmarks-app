@@ -52,7 +52,6 @@ button {
   opacity: 0.4;
 }
 
-
 h1 {
   font-family: 'Amatic SC', cursive;
 }
@@ -72,7 +71,13 @@ html {
 }
 
 .minratingdiv {
-  text-align:right;
+  text-align: left;
+  display: block;
+  border: 2px solid black;
+  background-color: #E8F7EE;
+  border-radius: 5px;
+  padding-bottom: 2px;
+
 }
 
 .button, #cancel-error {
@@ -260,3 +265,4 @@ transform 150ms ease;
 .form-description * {
   vertical-align: top;
 }
+
