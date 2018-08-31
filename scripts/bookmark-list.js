@@ -56,7 +56,7 @@ const bookmarkList = (function() {
           <label for="bookmark-1stars">1 Stars</label>
         </fieldset>
                 
-        <input type="button" name="SaveBookmark" id='bookmark-save' class='formBtn button' value="Save Bookmark" />
+        <input type="button" name="SaveBookmark" id='add-bookmark-save' class='formBtn button' value="Save Bookmark" />
                 
       </form>
     </div>`;
@@ -101,7 +101,7 @@ const bookmarkList = (function() {
           ${ratingHTML}
         </fieldset>
                 
-        <input type="button" name="SaveBookmark" id='bookmark-save' class='formBtn button' value="Save Bookmark" />
+        <input type="button" name="SaveBookmark" id='edit-bookmark-save' class='formBtn button' value="Save Bookmark" />
                 
       </form>
     </div>`;
@@ -201,8 +201,6 @@ const bookmarkList = (function() {
       }
     });
 
-    console.log(items)
-
     // render the shopping list in the DOM
     console.log('`render` ran');
     const shoppingListItemsString = generateBookmarkItemsString(items);
@@ -213,8 +211,6 @@ const bookmarkList = (function() {
   }
 
   function handleAddBookmarkButton() {
-    console.log('handle entered');
-
     $('.addBtn').on('click', event => {
       event.preventDefault();
       
@@ -243,10 +239,9 @@ const bookmarkList = (function() {
   }
 
   function handleAddBookmarkSaveButton() {
-    $('.js-items').on('click', '#bookmark-save', event => {
+    $('.js-items').on('click', '#add-bookmark-save', event => {
       event.preventDefault();
-      console.log('Save pressed')
-
+      
       //get data from user
       const jsonFormData = $('.1form-bookmark').serializeJson();
       const newItem = '';
@@ -290,24 +285,47 @@ const bookmarkList = (function() {
   }
 
   function handleEditBookmarkButton() {
-    console.log('handle entered');
-
     $('.js-items').on('click', '.js-item-edit', event => {
       event.preventDefault();
       
       //get user data --> Done by click
       const id = getItemIdFromElement(event.currentTarget);
+
+      //change the store
       store.editingBookmark = id;
-      //Now that I have ID, I need to get all the form data again
-      //then I need to do api.updateItem(id, {jsonData})
-      //Update store.findAndUpdate
-      console.log(id)
-      //update store
-      //TODO: On Edit Save, flip the editingbookmark back
-      //store.editingBookmark = !store.editingBookmark;
 
       //render()
       render();
+      
+    });
+  }
+
+  function handleEditBookmarkSaveButton() {
+    $('.js-items').on('click', '#edit-bookmark-save', event => {
+      event.preventDefault();
+      
+      //get data from user
+      const jsonFormData = $('.1form-bookmark').serializeJson();
+      
+      const newItem = '';
+
+
+      api.updateItem(jsonFormData,
+        (foo) => {
+          //change the store
+          store.findAndUpdate(store.editingBookmark, JSON.parse(jsonFormData));
+          store.editingBookmark = false;
+
+          //render
+          render();
+        },
+        (err) => {
+          //change the store
+          store.setError(err);
+          //render
+          render();
+        }
+      );
     });
   }
 
@@ -323,8 +341,6 @@ const bookmarkList = (function() {
     $('.minimum_rating_box').change(event => {
       //get data from user
       const minRatingValue = $(event.target).val();
-
-      console.log(minRatingValue)
 
       //update state
       store.minRatingShown = minRatingValue;
@@ -342,6 +358,7 @@ const bookmarkList = (function() {
     handleCloseError();
     handleDeleteItemClicked();
     handleEditBookmarkButton();
+    handleEditBookmarkSaveButton();
     handleCancelButton();
     handleMinRatingChooser();
   }

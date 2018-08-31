@@ -10,7 +10,7 @@ const api = (function() {
   const createItem = function(name, onSuccess, onError) {
     const newItem = name;
     console.log(newItem)
-
+    
     $.ajax({
       url: BASE_URL,
       method: 'POST',
@@ -29,10 +29,26 @@ const api = (function() {
     });
   };
 
+  const updateItem = function(itemData, onSuccess, onError) {
+    const updatedItem = itemData;
+    console.log(itemData)
+    console.log(store.editingBookmark)
+
+    $.ajax({
+      url: BASE_URL + '/' + store.editingBookmark,
+      method: 'PATCH',
+      contentType: 'application/json',
+      data: updatedItem,
+      success: onSuccess,
+      error: onError
+    });
+  };
+
   return {
     createItem,
     getItems,
-    deleteItem
+    deleteItem,
+    updateItem
   };
 
 

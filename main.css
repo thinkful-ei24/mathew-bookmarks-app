@@ -171,7 +171,7 @@ select {
   position: relative;
 }
 
-#bookmark-save {
+#add-bookmark-save, #edit-bookmark-save {
   margin-top: 14px;
 }
 
