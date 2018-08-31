@@ -107,6 +107,26 @@ html {
   transform: scale(0.99);
 }
 
+.title-button {
+  width: 100%;
+  display: inline-block;
+  border: none;
+  padding: 0.7rem 1.8rem;
+  margin: 0;
+  text-decoration: none;
+  background: #393E41;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: left;
+  transition: background 250ms ease-in-out, 
+              transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 select {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
@@ -156,8 +176,6 @@ select {
 .js-item-edit, .js-item-delete {
   font-size: 0.7rem;
   position: relative;
-  left: 154px;
-  top: -45px;
   margin-top: 2px;
 }
 

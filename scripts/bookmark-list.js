@@ -113,15 +113,16 @@ const bookmarkList = (function() {
     let htmlText = '';
     const ratingString = generateRatingStars(item.rating);
     
-    let htmlTitle = `<button role='button' class='bookmark js-bookmark-element' data-item-id="${item.id}"><p class='js-title-area'>${item.title}
-    <span class='stars'>${ratingString}</span></p>`;
+    let htmlTitle = `<section class='bookmark'>
+    <button role='button' class='title-button js-bookmark-element' data-item-id="${item.id}">
+    <p class='js-title-area'>${item.title}<span class='stars'>${ratingString}</span></p></button>`;
     
     if (item.expanded === true) {
       htmlText = htmlTitle + generateExpandedBookmarkHtml(item);
-      return htmlText + '</button>';
+      return htmlText + '</section>';
     }
 
-    return htmlTitle + '</button>';
+    return htmlTitle + '</section>';
   }
 
   function generateExpandedBookmarkHtml(item) {
