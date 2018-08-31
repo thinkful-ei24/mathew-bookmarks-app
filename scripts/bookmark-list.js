@@ -223,6 +223,7 @@ const bookmarkList = (function() {
 
   function handleClickTitleToExpand() {
     $('.js-items').on('click', '.js-title-area', event => {
+      event.preventDefault();
       //get user data
       const id = getItemIdFromElement(event.target);
       const item = store.findById(id);
