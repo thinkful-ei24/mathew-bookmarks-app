@@ -8,6 +8,18 @@ main .row {
   margin-bottom: 20px;
 }
 
+/* Button normalizing? */
+button {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+  overflow: visible;
+  text-transform: none;
+  -webkit-appearance: button;
+}
+
+
 .box {
   height: 200px;
   text-align: center;
@@ -109,6 +121,9 @@ select {
   margin-right: 10px;
   padding: 5px;
   position: relative;
+  display:block;
+  width: 100%;
+  text-align: left;
 }
 
 .addbookmark {
@@ -141,8 +156,8 @@ select {
 .js-item-edit, .js-item-delete {
   font-size: 0.7rem;
   position: relative;
-  left: 5px;
-  top: 14px;
+  left: 154px;
+  top: -45px;
   margin-top: 2px;
 }
 
@@ -178,7 +193,7 @@ select {
 .go-to-site {
   width: 132px;
   position: relative;
-  bottom: -12px;
+  bottom: 0px;
   height: 40px;
   display: inline-block;
   border: none;

@@ -113,27 +113,24 @@ const bookmarkList = (function() {
     let htmlText = '';
     const ratingString = generateRatingStars(item.rating);
     
-    let htmlTitle = `<div class='bookmark js-bookmark-element' data-item-id="${item.id}"><p class='js-title-area'>${item.title}
+    let htmlTitle = `<button class='bookmark js-bookmark-element' data-item-id="${item.id}"><p class='js-title-area'>${item.title}
     <span class='stars'>${ratingString}</span></p>`;
     
     if (item.expanded === true) {
       htmlText = htmlTitle + generateExpandedBookmarkHtml(item);
-      return htmlText;
+      return htmlText + '</button>';
     }
 
-    return htmlTitle + '</div>';
+    return htmlTitle + '</button>';
   }
 
   function generateExpandedBookmarkHtml(item) {
     return `
     <p class="bookmark-drop-down">${item.desc}</p>
-    <p>
     <p class="go-to-site"><a href="${item.url}" target="_blank">Visit Site</a></p>
     <button class="js-item-edit button">Edit</button>
     <button class="js-item-delete button">Delete</button>
-              
-     </p>
-    </div>`;
+    `;
   }
 
   function generateRatingStars(ratingLevel) {
