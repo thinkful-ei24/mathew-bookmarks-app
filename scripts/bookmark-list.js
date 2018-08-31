@@ -36,7 +36,7 @@ const bookmarkList = (function() {
           <label for="description">Description</label>
           <textarea type="textarea" name='desc' id='bookmark-description' placeholder='eg., A webpage about cats'></textarea>
         </fieldset>
-        <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
+        <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel" />
         <fieldset class='ratingarea'>
           <legend>Your Rating</legend>
         
@@ -56,7 +56,7 @@ const bookmarkList = (function() {
           <label for="bookmark-1stars">1 Stars</label>
         </fieldset>
                 
-        <input type="button" name="SaveBookmark" id='add-bookmark-save' class='formBtn button' value="Save Bookmark" />
+        <input type="button" name="SaveBookmark" id='add-bookmark-save' class='formBtn button' value="Save" />
                 
       </form>
     </div>`;
@@ -94,14 +94,14 @@ const bookmarkList = (function() {
           <label for="description">Description</label>
           <textarea type="textarea" name='desc' id='bookmark-description' placeholder='eg., A webpage about cats'>${item.desc}</textarea>
         </fieldset>
-        <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel Bookmark" />
+        <input type="button" name="CancelBookmark" id='bookmark-cancel' class='formBtn button' value="Cancel" />
         <fieldset class='ratingarea'>
           <legend>Your Rating</legend>
         
           ${ratingHTML}
         </fieldset>
                 
-        <input type="button" name="SaveBookmark" id='edit-bookmark-save' class='formBtn button' value="Save Bookmark" />
+        <input type="button" name="SaveBookmark" id='edit-bookmark-save' class='formBtn button' value="Save" />
                 
       </form>
     </div>`;
@@ -128,7 +128,7 @@ const bookmarkList = (function() {
     return `
     <p class="bookmark-drop-down">${item.desc}</p>
     <p>
-    <p class="go-to-site"><a href="${item.url}" target="_blank">Go to Site</a></button></p>
+    <p class="go-to-site"><a href="${item.url}" target="_blank">Visit Site</a></button></p>
     <button class="js-item-edit">Edit</button>
     <button class="js-item-delete">Delete</button>
               
