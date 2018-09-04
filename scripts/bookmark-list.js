@@ -66,6 +66,7 @@ const bookmarkList = (function() {
   function generateEditBookmarkHtml() {
     const item = store.findById(store.editingBookmark);
     let ratingHTML = '';
+    console.log(item)
     
     for(let i=1; i <= 5; i++ ) {
       if ( i === item.rating) {
@@ -278,7 +279,13 @@ const bookmarkList = (function() {
       const id = getItemIdFromElement(event.currentTarget);
       api.deleteItem(id, () => {
         store.findAndDelete(id);
+        //Bug fix: If this is not here, and someone edits a bookmark then deletes it, a TypeError is thrown
+        store.addingBookmark = false;
+        store.editingBookmark = false;
+        
         render();
+
+        
       })
     });
   }
